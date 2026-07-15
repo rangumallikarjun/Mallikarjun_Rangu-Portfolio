@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-export default function Preloader() {
+export default function Preloader({ name }: { name: string }) {
   const [progress, setProgress] = useState(0);
   const [done, setDone] = useState(false);
 
@@ -45,7 +45,7 @@ export default function Preloader() {
               transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
               className="font-display text-sm tracking-[0.3em] uppercase text-muted block mb-6"
             >
-              Ava Ren
+              {name}
             </motion.span>
           </div>
           <div className="font-display text-[clamp(3rem,12vw,8rem)] leading-none tabular-nums">

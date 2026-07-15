@@ -22,14 +22,26 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function SiteLayout({ children }: { children: React.ReactNode }) {
+function getInitials(name: string) {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 3)
+    .toUpperCase();
+}
+
+export default async function SiteLayout({ children }: { children: React.ReactNode }) {
+  const { profile } = await getSiteContent();
+
   return (
     <div className="site-chrome overflow-x-hidden selection:bg-accent selection:text-black">
-      <Preloader />
+      <Preloader name={profile.name} />
       <Noise />
       <Cursor />
       <ScrollProgress />
-      <Navbar />
+      <Navbar brand={getInitials(profile.name)} />
       <SmoothScroll>{children}</SmoothScroll>
     </div>
   );

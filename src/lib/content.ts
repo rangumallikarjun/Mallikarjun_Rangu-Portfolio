@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { getAdminDb } from "./firebase/admin";
 import { defaultContent } from "./default-content";
 import type {
@@ -47,7 +48,7 @@ async function getCollection<T extends { order: number }>(
   }
 }
 
-export async function getSiteContent(): Promise<SiteContent> {
+export const getSiteContent = cache(async (): Promise<SiteContent> => {
   const [profile, hero, about, marqueeDoc, skillGroups, projects, experience, certifications, socialLinks] =
     await Promise.all([
       getDoc<Profile>("content/profile", defaultContent.profile),
@@ -72,4 +73,4 @@ export async function getSiteContent(): Promise<SiteContent> {
     certifications,
     socialLinks,
   };
-}
+});
